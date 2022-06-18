@@ -23,18 +23,26 @@ export default function Editor() {
     <>
       <TinyMceReactEditor
         apiKey="98eu7znwbri5wrh1v1h5t47fd9iu8qkrrqkuvof5ygn60nbi"
-        onInit={(evt, editor) => (editorRef.current = editor)}
+        onInit={(_, editor) => {
+          editorRef.current = editor;
+        }}
         initialValue="<p>This is the initial content of the editor.</p>"
         init={{
           height: 500,
           menubar: false,
-          plugins: ["lists"],
-          toolbar: "undo redo | blocks | " + "removeformat | help",
-          content_style:
-            "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+          content_css: "",
+          language: "nb_NO",
+          language_url: "/langs/nb_NO.js",
+          plugins: ["table", "code", "wordcount"],
+          toolbar: [
+            { name: "history", items: ["undo", "redo"] },
+            { name: "styles", items: ["styles"] },
+          ],
         }}
       />
-      <button onClick={() => console.log()}>Log editor content</button>
+      {/* <Button variant="contained" onClick={() => copyContentToClipboard()}>
+        Kopier html
+      </Button> */}
     </>
   );
 }

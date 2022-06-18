@@ -13,6 +13,9 @@
 # production
 /build
 
+/public/tinymce/
+/public/geo-image/
+
 # misc
 .DS_Store
 .env.local

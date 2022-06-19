@@ -1,9 +1,14 @@
 import "./App.css";
 
-import Editor from "./components/editor";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
-  return <Editor />;
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="about" element={<About />} />
+    </Routes>
+  );
 }
 
 export default App;

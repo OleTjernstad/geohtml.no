@@ -14,6 +14,14 @@ export default function StartScreen() {
   //   }
   // }, [files.length, navigate]);
 
+  async function getFile() {
+    const [fileHandle] = await window.showOpenFilePicker();
+    console.log(fileHandle);
+    const file = await fileHandle.getFile();
+    const contents = await file.text();
+    console.log(contents);
+  }
+
   return (
     <div
       style={{
@@ -28,6 +36,7 @@ export default function StartScreen() {
           alt="logo"
         />
       </div>
+      <button onClick={getFile}>Test file</button>
       <div
         style={{
           display: "flex",

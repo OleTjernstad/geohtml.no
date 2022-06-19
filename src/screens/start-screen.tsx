@@ -2,7 +2,7 @@ import Chip from "@mui/material/Chip";
 // import { useEffect } from 'react';
 // import { useNavigate } from 'react-router-dom';
 // import { useFile } from 'renderer/context/file';
-// import logo from '../../../assets/logo.png';
+import logo from "../assets/logo.png";
 
 export default function StartScreen() {
   // const { files } = useFile();
@@ -22,11 +22,11 @@ export default function StartScreen() {
       }}
     >
       <div style={{ display: "flex", justifyContent: "center" }}>
-        {/* <img
+        <img
           src={logo}
-          style={{ height: '40vmin', marginTop: '5vh' }}
+          style={{ height: "40vmin", marginTop: "5vh" }}
           alt="logo"
-        /> */}
+        />
       </div>
       <div
         style={{

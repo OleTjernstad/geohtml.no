@@ -36,7 +36,6 @@ export default function StartScreen() {
           alt="logo"
         />
       </div>
-      <button onClick={getFile}>Test file</button>
       <div
         style={{
           display: "flex",
@@ -59,7 +58,7 @@ export default function StartScreen() {
         <dl>
           <dt>Ny fil</dt>
           <dd>
-            <Chip label="Ctrl" /> + <Chip label="N" />
+            <Chip label="Ctrl" /> + <Chip label="M" />
           </dd>
 
           <dt>Åpne fil</dt>

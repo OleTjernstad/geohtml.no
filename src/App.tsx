@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 
+import EditorScreen from "./screens/editor-screen";
 import { FileContextProvider } from "./context/file";
 import StartScreen from "./screens/start-screen";
 
@@ -8,7 +9,7 @@ function App() {
     <FileContextProvider>
       <Routes>
         <Route path="/" element={<StartScreen />} />
-        {/* <Route path="about" element={<About />} /> */}
+        <Route path="editor" element={<EditorScreen />} />
       </Routes>
     </FileContextProvider>
   );

@@ -1,4 +1,7 @@
-export const a = 1;
+export default function EditorScreen() {
+  return <p>Editor</p>;
+}
+
 // import { useEffect, useState } from 'react';
 // import Editor from 'renderer/components/editor';
 // import FileSelector from 'renderer/components/file-tabs';

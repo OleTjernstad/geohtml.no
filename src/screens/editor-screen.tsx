@@ -1,5 +1,7 @@
+import Editor from "../components/editor";
+
 export default function EditorScreen() {
-  return <p>Editor</p>;
+  return <Editor />;
 }
 
 // import { useEffect, useState } from 'react';

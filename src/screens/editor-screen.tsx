@@ -1,7 +1,16 @@
 import Editor from "../components/editor";
 
 export default function EditorScreen() {
-  return <Editor />;
+  return (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
+      <Editor />
+    </div>
+  );
 }
 
 // import { useEffect, useState } from 'react';

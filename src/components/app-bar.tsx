@@ -39,21 +39,15 @@ export default function AppBar() {
         anchor={"left"}
         open={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
-        // classes={{
-        //   paper: {
-        //     width: 300,
-        //     backgroundColor: theme.palette.primary.main,
-        //   },
-        // }}
       >
         <List sx={{ paddingTop: "70px" }}>
           <ListItem disablePadding>
             <ListItemButton
               sx={{ display: "flex", justifyContent: "space-between" }}
             >
-              <ListItemText primary="Åpne" />
+              <ListItemText primary="Åpne fil" />
 
-              <Chip size="small" label="Ctrl + O" />
+              <Chip sx={{ color: "#d3d3d3" }} size="small" label="Ctrl + O" />
             </ListItemButton>
           </ListItem>
         </List>

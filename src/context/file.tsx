@@ -94,6 +94,7 @@ export const FileContextProvider = ({
         refreshIndex,
         setActiveFile: setActiveId,
         updateEditedStatus,
+        createNewFile: newFile,
       }}
     >
       {children}

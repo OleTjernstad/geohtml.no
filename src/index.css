@@ -6,3 +6,12 @@ body {
   background: linear-gradient(300.96deg, #f76cc6 9.77%, #c471f2 99.35%);
 }
 
+
+.Mui-selected {
+  color: #f76cc6 !important;
+
+}
+
+.MuiTabs-indicator {
+  background-color: #f76cc6 !important;
+}

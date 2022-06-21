@@ -39,7 +39,7 @@ function App() {
         <Box sx={{ paddingTop: "70px" }}>
           <Routes>
             <Route path="/" element={<StartScreen />} />
-            <Route path="editor" element={<EditorScreen />} />
+            <Route path="editor/:id" element={<EditorScreen />} />
           </Routes>
         </Box>
       </FileContextProvider>

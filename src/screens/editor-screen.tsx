@@ -5,7 +5,7 @@ import Editor from "../components/editor";
 import { useFile } from "../context/file";
 
 export default function EditorScreen() {
-  const { createNewFile, files } = useFile();
+  const { createNewFile, openExistingFile, files } = useFile();
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -33,7 +33,11 @@ export default function EditorScreen() {
         justifyContent: "center",
       }}
     >
-      <Editor file={file} openNewFile={createNewFile} />
+      <Editor
+        file={file}
+        openNewFile={createNewFile}
+        openExistingFile={openExistingFile}
+      />
     </div>
   );
 }

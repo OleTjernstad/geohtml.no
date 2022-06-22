@@ -33,7 +33,7 @@ export const FileContextProvider = ({
   });
   useHotkeys("Control+o", (e) => {
     e.preventDefault();
-    getFile();
+    openFile();
   });
 
   function newFile() {
@@ -41,14 +41,14 @@ export const FileContextProvider = ({
     setFiles((prev) => {
       return [
         ...prev,
-        { id, content: "", name: "Ny fil.html", path: undefined },
+        { id, content: "", name: "Ny fil.html", fileHandle: undefined },
       ];
     });
     navigate(`editor/${id}`);
     updateEditedStatus(id, true);
   }
 
-  async function getFile() {
+  async function openFile() {
     const [fileHandle] = await window.showOpenFilePicker();
     console.log(fileHandle);
     const file = await fileHandle.getFile();
@@ -56,10 +56,7 @@ export const FileContextProvider = ({
 
     const id = uuidv4();
     setFiles((prev) => {
-      return [
-        ...prev,
-        { id, content: contents, name: file.name, path: undefined },
-      ];
+      return [...prev, { id, content: contents, name: file.name, fileHandle }];
     });
     navigate(`editor/${id}`);
   }
@@ -111,6 +108,7 @@ export const FileContextProvider = ({
 
         updateEditedStatus,
         createNewFile: newFile,
+        openExistingFile: openFile,
       }}
     >
       {children}

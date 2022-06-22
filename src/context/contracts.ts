@@ -8,4 +8,5 @@ export interface ContextInterface {
   updateEditedStatus: (id: string, hasBeenEdited: boolean) => void;
 
   createNewFile: () => void;
+  openExistingFile: () => void;
 }

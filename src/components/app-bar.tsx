@@ -16,7 +16,7 @@ import { useState } from "react";
 export default function AppBar() {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
-  const { createNewFile, files, isEdited } = useFile();
+  const { createNewFile, openExistingFile, files, isEdited } = useFile();
 
   function newFile() {
     createNewFile();
@@ -61,6 +61,7 @@ export default function AppBar() {
           </ListItem>
           <ListItem disablePadding>
             <ListItemButton
+              onClick={openExistingFile}
               sx={{ display: "flex", justifyContent: "space-between" }}
             >
               <ListItemText primary="Åpne fil" />

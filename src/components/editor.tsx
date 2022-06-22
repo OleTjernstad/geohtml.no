@@ -12,9 +12,14 @@ import { useRef } from "react";
 interface EditorProps {
   file: File;
   openNewFile: () => void;
+  openExistingFile: () => void;
 }
 
-export default function Editor({ openNewFile, file }: EditorProps) {
+export default function Editor({
+  openNewFile,
+  file,
+  openExistingFile,
+}: EditorProps) {
   const editorRef = useRef<TinyMCEEditor>();
 
   return (
@@ -34,6 +39,9 @@ export default function Editor({ openNewFile, file }: EditorProps) {
           setup: (editor) => {
             editor.addShortcut("ctrl+m", "Åpne nytt dokument", () => {
               openNewFile();
+            });
+            editor.addShortcut("ctrl+o", "Åpne eksisterende dokument", () => {
+              openExistingFile();
             });
           },
           plugins: [

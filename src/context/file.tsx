@@ -70,6 +70,7 @@ export const FileContextProvider = ({
       // Save file as
       if (!file.fileHandle) {
         const options = {
+          suggestedName: "Beskrivelse.html",
           types: [
             {
               description: "Geocaching beskrivelse",
@@ -81,35 +82,32 @@ export const FileContextProvider = ({
         };
         const fileHandle = await window.showSaveFilePicker(options);
 
-        const newContent = editorRef.current?.getContent();
-
-        _save(file, fileHandle, newContent);
-
-        const savedFile = await fileHandle.getFile();
-
-        setFiles((fs) => {
-          return fs.map((f) => {
-            if (f.id === file.id) {
-              return {
-                ...f,
-                content: newContent ?? f.content,
-                name: savedFile.name,
-                fileHandle,
-              };
-            }
-            return f;
-          });
-        });
-        updateEditedStatus(id, false);
+        _save(file, fileHandle);
+      } else {
+        _save(file, file.fileHandle);
       }
     }
   }
 
-  async function _save(
-    file: File,
-    fileHandle: FileSystemFileHandle,
-    newContent: string | undefined
-  ) {
+  async function _save(file: File, fileHandle: FileSystemFileHandle) {
+    const newContent = editorRef.current?.getContent();
+
+    const savedFile = await fileHandle.getFile();
+
+    setFiles((fs) => {
+      return fs.map((f) => {
+        if (f.id === file.id) {
+          return {
+            ...f,
+            content: newContent ?? f.content,
+            name: savedFile.name,
+            fileHandle,
+          };
+        }
+        return f;
+      });
+    });
+    updateEditedStatus(file.id, false);
     // Create a FileSystemWritableFileStream to write to.
     const writable = await fileHandle.createWritable();
     // Write the contents of the file to the stream.

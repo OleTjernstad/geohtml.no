@@ -20,7 +20,7 @@ export default function Editor({
   file,
   openExistingFile,
 }: EditorProps) {
-  const { saveFile, editorRef } = useFile();
+  const { saveFile, editorRef, updateEditedStatus } = useFile();
 
   // Save file
   useHotkeys("Control+s", (e) => {
@@ -35,6 +35,9 @@ export default function Editor({
         tinymceScriptSrc={process.env.PUBLIC_URL + "/tinymce/tinymce.min.js"}
         onInit={(_, editor) => {
           editorRef.current = editor;
+        }}
+        onChange={() => {
+          if (file) updateEditedStatus(file.id, true);
         }}
         initialValue={file.content}
         init={{

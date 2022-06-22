@@ -2,14 +2,6 @@ import Chip from "@mui/material/Chip";
 import logo from "../assets/logo.png";
 
 export default function StartScreen() {
-  // async function getFile() {
-  //   const [fileHandle] = await window.showOpenFilePicker();
-  //   console.log(fileHandle);
-  //   const file = await fileHandle.getFile();
-  //   const contents = await file.text();
-  //   console.log(contents);
-  // }
-
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "center" }}>

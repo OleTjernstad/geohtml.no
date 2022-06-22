@@ -33,7 +33,7 @@ export const FileContextProvider = ({
   });
   useHotkeys("Control+o", (e) => {
     e.preventDefault();
-    newFile();
+    getFile();
   });
 
   function newFile() {
@@ -46,6 +46,22 @@ export const FileContextProvider = ({
     });
     navigate(`editor/${id}`);
     updateEditedStatus(id, true);
+  }
+
+  async function getFile() {
+    const [fileHandle] = await window.showOpenFilePicker();
+    console.log(fileHandle);
+    const file = await fileHandle.getFile();
+    const contents = await file.text();
+
+    const id = uuidv4();
+    setFiles((prev) => {
+      return [
+        ...prev,
+        { id, content: contents, name: file.name, path: undefined },
+      ];
+    });
+    navigate(`editor/${id}`);
   }
 
   const updateEditedStatus = (id: string, hasBeenEdited: boolean) => {

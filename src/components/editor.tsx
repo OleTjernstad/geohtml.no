@@ -2,6 +2,7 @@
 
 import "@tjernstad-utvikling/geo-image/dist/plugin";
 
+import { File } from "../contracts/file";
 import { Editor as TinyMCEEditor } from "tinymce";
 import { Editor as TinyMceReactEditor } from "@tinymce/tinymce-react";
 import { useRef } from "react";
@@ -9,11 +10,11 @@ import { useRef } from "react";
 // import '../style/tinymce.css';
 
 interface EditorProps {
-  // file: File;
+  file: File;
   openNewFile: () => void;
 }
 
-export default function Editor({ openNewFile }: EditorProps) {
+export default function Editor({ openNewFile, file }: EditorProps) {
   const editorRef = useRef<TinyMCEEditor>();
 
   return (
@@ -23,7 +24,7 @@ export default function Editor({ openNewFile }: EditorProps) {
         onInit={(_, editor) => {
           editorRef.current = editor;
         }}
-        initialValue="<p>This is the initial content of the editor.</p>"
+        initialValue={file.content}
         init={{
           height: 500,
           menubar: false,

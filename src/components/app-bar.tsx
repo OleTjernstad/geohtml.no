@@ -22,6 +22,10 @@ export default function AppBar() {
     createNewFile();
     setIsDrawerOpen(false);
   }
+  function openFile() {
+    openExistingFile();
+    setIsDrawerOpen(false);
+  }
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBarMui
@@ -61,7 +65,7 @@ export default function AppBar() {
           </ListItem>
           <ListItem disablePadding>
             <ListItemButton
-              onClick={openExistingFile}
+              onClick={openFile}
               sx={{ display: "flex", justifyContent: "space-between" }}
             >
               <ListItemText primary="Åpne fil" />

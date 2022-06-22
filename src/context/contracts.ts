@@ -9,4 +9,5 @@ export interface ContextInterface {
 
   createNewFile: () => void;
   openExistingFile: () => void;
+  saveFile: (id: string, newContent: string | undefined) => void;
 }

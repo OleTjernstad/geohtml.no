@@ -4,9 +4,3 @@ export interface File {
   fileHandle: FileSystemFileHandle | undefined;
   id: string;
 }
-
-export function isFile(obj: unknown): obj is File {
-  return (
-    (obj as File).name !== undefined && typeof (obj as File).name === "string"
-  );
-}

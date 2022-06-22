@@ -9,7 +9,6 @@ export default function EditorScreen() {
 
   const { id } = useParams();
   const navigate = useNavigate();
-  console.log(id);
 
   const file = useMemo(() => {
     return files.find((f) => f.id === id);

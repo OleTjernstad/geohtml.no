@@ -5,6 +5,8 @@ import "@tjernstad-utvikling/geo-image/dist/plugin";
 import { File } from "../contracts/file";
 import { Editor as TinyMCEEditor } from "tinymce";
 import { Editor as TinyMceReactEditor } from "@tinymce/tinymce-react";
+import { useFile } from "../context/file";
+import { useHotkeys } from "react-hotkeys-hook";
 import { useRef } from "react";
 
 // import '../style/tinymce.css';
@@ -21,6 +23,15 @@ export default function Editor({
   openExistingFile,
 }: EditorProps) {
   const editorRef = useRef<TinyMCEEditor>();
+
+  const { saveFile } = useFile();
+
+  // Save file
+  useHotkeys("Control+s", (e) => {
+    e.preventDefault();
+
+    if (file.id) saveFile(file.id, editorRef.current?.getContent());
+  });
 
   return (
     <div style={{ maxWidth: "970px" }}>
@@ -42,6 +53,9 @@ export default function Editor({
             });
             editor.addShortcut("ctrl+o", "Åpne eksisterende dokument", () => {
               openExistingFile();
+            });
+            editor.addShortcut("ctrl+s", "Lagre dokument", () => {
+              if (file.id) saveFile(file.id, editorRef.current?.getContent());
             });
           },
           plugins: [

@@ -23,14 +23,13 @@ export const FileContextProvider = ({
 
   const navigate = useNavigate();
 
+  // New file
   useHotkeys("Control+m", (e) => {
     e.preventDefault();
     newFile();
   });
-  useHotkeys("Control+s", (e) => {
-    e.preventDefault();
-    newFile();
-  });
+
+  // Open file
   useHotkeys("Control+o", (e) => {
     e.preventDefault();
     openFile();
@@ -59,6 +58,59 @@ export const FileContextProvider = ({
       return [...prev, { id, content: contents, name: file.name, fileHandle }];
     });
     navigate(`editor/${id}`);
+  }
+
+  async function saveFile(id: string, newContent: string | undefined) {
+    const file = files.find((f) => f.id === id);
+
+    if (file) {
+      // Save file as
+      if (!file.fileHandle) {
+        const options = {
+          types: [
+            {
+              description: "Geocaching beskrivelse",
+              accept: {
+                "text/html": [".html"],
+              },
+            },
+          ],
+        };
+        const fileHandle = await window.showSaveFilePicker(options);
+
+        _save(file, fileHandle, newContent);
+
+        const savedFile = await fileHandle.getFile();
+
+        setFiles((fs) => {
+          return fs.map((f) => {
+            if (f.id === file.id) {
+              return {
+                ...f,
+                content: newContent ?? f.content,
+                name: savedFile.name,
+                fileHandle,
+              };
+            }
+            return f;
+          });
+        });
+        updateEditedStatus(id, false);
+      }
+    }
+  }
+
+  async function _save(
+    file: File,
+    fileHandle: FileSystemFileHandle,
+    newContent: string | undefined
+  ) {
+    // Create a FileSystemWritableFileStream to write to.
+    const writable = await fileHandle.createWritable();
+    // Write the contents of the file to the stream.
+    await writable.write(newContent ?? file.content);
+    // Close the file and write the contents to disk.
+    await writable.close();
   }
 
   const updateEditedStatus = (id: string, hasBeenEdited: boolean) => {
@@ -109,6 +161,7 @@ export const FileContextProvider = ({
         updateEditedStatus,
         createNewFile: newFile,
         openExistingFile: openFile,
+        saveFile,
       }}
     >
       {children}

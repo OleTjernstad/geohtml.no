@@ -31,7 +31,7 @@ export function FileTabs({ files, isEdited }: FileTabsProps) {
   const currentTab = routeMatch?.pattern?.path;
 
   return (
-    <Tabs value={currentTab}>
+    <Tabs value={currentTab} variant="scrollable" scrollButtons="auto">
       {files.map((f) => (
         <Tab
           sx={{ textTransform: "none" }}

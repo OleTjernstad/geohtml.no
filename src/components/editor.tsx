@@ -10,9 +10,10 @@ import { useRef } from "react";
 
 interface EditorProps {
   // file: File;
+  openNewFile: () => void;
 }
 
-export default function Editor() {
+export default function Editor({ openNewFile }: EditorProps) {
   const editorRef = useRef<TinyMCEEditor>();
 
   return (
@@ -29,6 +30,11 @@ export default function Editor() {
           content_css: "",
           language: "nb_NO",
           language_url: "/langs/nb_NO.js",
+          setup: (editor) => {
+            editor.addShortcut("ctrl+m", "Åpne nytt dokument", () => {
+              openNewFile();
+            });
+          },
           plugins: [
             "table",
             "code",

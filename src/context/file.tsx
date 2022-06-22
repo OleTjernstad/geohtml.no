@@ -3,6 +3,7 @@ import { createContext, useContext, useState } from "react";
 import { ContextInterface } from "./contracts";
 import { File } from "../contracts/file";
 import { useHotkeys } from "react-hotkeys-hook";
+import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
 const context = createContext<ContextInterface>({} as ContextInterface);
@@ -17,9 +18,10 @@ export const FileContextProvider = ({
   children: React.ReactNode;
 }): JSX.Element => {
   const [files, setFiles] = useState<File[]>([]);
-  const [activeId, setActiveId] = useState<string>();
   const [isEdited, setIsEdited] = useState<Map<string, boolean>>(new Map());
   const [refreshIndex, setRefreshIndex] = useState<number>();
+
+  const navigate = useNavigate();
 
   useHotkeys("Control+m", (e) => {
     e.preventDefault();
@@ -42,9 +44,8 @@ export const FileContextProvider = ({
         { id, content: "", name: "Ny fil.html", path: undefined },
       ];
     });
-    console.log("newFile");
+    navigate(`editor/${id}`);
     updateEditedStatus(id, true);
-    setActiveId(id);
   }
 
   const updateEditedStatus = (id: string, hasBeenEdited: boolean) => {
@@ -89,10 +90,9 @@ export const FileContextProvider = ({
     <context.Provider
       value={{
         files,
-        activeId,
         isEdited,
         refreshIndex,
-        setActiveFile: setActiveId,
+
         updateEditedStatus,
         createNewFile: newFile,
       }}

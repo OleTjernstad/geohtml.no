@@ -1,19 +1,7 @@
 import Chip from "@mui/material/Chip";
 import logo from "../assets/logo.png";
-import { useEffect } from "react";
-import { useFile } from "../context/file";
-import { useNavigate } from "react-router-dom";
 
 export default function StartScreen() {
-  const { files } = useFile();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (files.length > 0) {
-      navigate("editor");
-    }
-  }, [files.length, navigate]);
-
   // async function getFile() {
   //   const [fileHandle] = await window.showOpenFilePicker();
   //   console.log(fileHandle);
@@ -23,12 +11,7 @@ export default function StartScreen() {
   // }
 
   return (
-    <div
-      style={{
-        width: "100vw",
-        height: "100vh",
-      }}
-    >
+    <div>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <img
           src={logo}

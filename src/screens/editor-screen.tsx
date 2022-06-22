@@ -1,6 +1,8 @@
 import Editor from "../components/editor";
+import { useFile } from "../context/file";
 
 export default function EditorScreen() {
+  const { createNewFile } = useFile();
   return (
     <div
       style={{
@@ -8,7 +10,7 @@ export default function EditorScreen() {
         justifyContent: "center",
       }}
     >
-      <Editor />
+      <Editor openNewFile={createNewFile} />
     </div>
   );
 }

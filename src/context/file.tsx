@@ -1,7 +1,8 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useRef, useState } from "react";
 
 import { ContextInterface } from "./contracts";
 import { File } from "../contracts/file";
+import { Editor as TinyMCEEditor } from "tinymce";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
@@ -20,6 +21,8 @@ export const FileContextProvider = ({
   const [files, setFiles] = useState<File[]>([]);
   const [isEdited, setIsEdited] = useState<Map<string, boolean>>(new Map());
   const [refreshIndex, setRefreshIndex] = useState<number>();
+
+  const editorRef = useRef<TinyMCEEditor>();
 
   const navigate = useNavigate();
 
@@ -60,7 +63,7 @@ export const FileContextProvider = ({
     navigate(`editor/${id}`);
   }
 
-  async function saveFile(id: string, newContent: string | undefined) {
+  async function saveFile(id: string) {
     const file = files.find((f) => f.id === id);
 
     if (file) {
@@ -77,6 +80,8 @@ export const FileContextProvider = ({
           ],
         };
         const fileHandle = await window.showSaveFilePicker(options);
+
+        const newContent = editorRef.current?.getContent();
 
         _save(file, fileHandle, newContent);
 
@@ -157,6 +162,7 @@ export const FileContextProvider = ({
         files,
         isEdited,
         refreshIndex,
+        editorRef,
 
         updateEditedStatus,
         createNewFile: newFile,

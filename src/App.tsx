@@ -1,8 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
-import AppBar from "./components/app-bar";
-import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import EditorScreen from "./screens/editor-screen";
 import { FileContextProvider } from "./context/file";
@@ -35,13 +33,10 @@ function App() {
     <ThemeProvider theme={theme}>
       <FileContextProvider>
         <CssBaseline />
-        <AppBar />
-        <Box sx={{ paddingTop: "70px" }}>
-          <Routes>
-            <Route path="/" element={<StartScreen />} />
-            <Route path="editor/:id" element={<EditorScreen />} />
-          </Routes>
-        </Box>
+        <Routes>
+          <Route path="/" element={<StartScreen />} />
+          <Route path="editor/:id" element={<EditorScreen />} />
+        </Routes>
       </FileContextProvider>
     </ThemeProvider>
   );

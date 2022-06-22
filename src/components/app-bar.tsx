@@ -13,10 +13,14 @@ import Toolbar from "@mui/material/Toolbar";
 import { useFile } from "../context/file";
 import { useState } from "react";
 
-export default function AppBar() {
+interface AppBarProps {
+  id?: string;
+}
+export default function AppBar({ id }: AppBarProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
-  const { createNewFile, openExistingFile, files, isEdited } = useFile();
+  const { createNewFile, openExistingFile, saveFile, files, isEdited } =
+    useFile();
 
   function newFile() {
     createNewFile();
@@ -25,6 +29,12 @@ export default function AppBar() {
   function openFile() {
     openExistingFile();
     setIsDrawerOpen(false);
+  }
+  function save() {
+    if (id) {
+      saveFile(id);
+      setIsDrawerOpen(false);
+    }
   }
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -73,6 +83,18 @@ export default function AppBar() {
               <Chip sx={{ color: "#d3d3d3" }} size="small" label="Ctrl + O" />
             </ListItemButton>
           </ListItem>
+          {id && (
+            <ListItem disablePadding>
+              <ListItemButton
+                onClick={save}
+                sx={{ display: "flex", justifyContent: "space-between" }}
+              >
+                <ListItemText primary="Lagre" />
+
+                <Chip sx={{ color: "#d3d3d3" }} size="small" label="Ctrl + S" />
+              </ListItemButton>
+            </ListItem>
+          )}
         </List>
       </Drawer>
     </Box>

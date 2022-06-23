@@ -50,6 +50,12 @@ export default function StartScreen() {
               <dd>
                 <Chip label="Ctrl" /> + <Chip label="S" />
               </dd>
+
+              <dt>Lagre som</dt>
+              <dd>
+                <Chip label="Ctrl" /> + <Chip label="Shift" /> +{" "}
+                <Chip label="S" />
+              </dd>
             </dl>
           </div>
         </div>

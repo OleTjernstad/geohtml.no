@@ -12,4 +12,5 @@ export interface ContextInterface {
   createNewFile: () => void;
   openExistingFile: () => void;
   saveFile: (id: string) => void;
+  saveFileAs: (id: string) => void;
 }

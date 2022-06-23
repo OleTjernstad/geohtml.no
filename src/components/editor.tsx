@@ -20,13 +20,21 @@ export default function Editor({
   file,
   openExistingFile,
 }: EditorProps) {
-  const { saveFile, editorRef, updateEditedStatus } = useFile();
+  const { saveFile, editorRef, updateEditedStatus, saveFileAs } = useFile();
 
   // Save file
   useHotkeys("Control+s", (e) => {
     e.preventDefault();
+    console.log("editor", file);
 
     if (file.id) saveFile(file.id);
+  });
+
+  // Save file
+  useHotkeys("Control+Shift+s", (e) => {
+    e.preventDefault();
+
+    if (file.id) saveFileAs(file.id);
   });
 
   return (
@@ -55,6 +63,9 @@ export default function Editor({
             });
             editor.addShortcut("ctrl+s", "Lagre dokument", () => {
               if (file.id) saveFile(file.id);
+            });
+            editor.addShortcut("ctrl+shift+s", "Lagre dokument som", () => {
+              if (file.id) saveFileAs(file.id);
             });
           },
           plugins: [

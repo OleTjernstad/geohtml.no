@@ -19,8 +19,14 @@ interface AppBarProps {
 export default function AppBar({ id }: AppBarProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
-  const { createNewFile, openExistingFile, saveFile, files, isEdited } =
-    useFile();
+  const {
+    createNewFile,
+    openExistingFile,
+    saveFile,
+    saveFileAs,
+    files,
+    isEdited,
+  } = useFile();
 
   function newFile() {
     createNewFile();
@@ -33,6 +39,12 @@ export default function AppBar({ id }: AppBarProps) {
   function save() {
     if (id) {
       saveFile(id);
+      setIsDrawerOpen(false);
+    }
+  }
+  function saveAs() {
+    if (id) {
+      saveFileAs(id);
       setIsDrawerOpen(false);
     }
   }
@@ -84,16 +96,37 @@ export default function AppBar({ id }: AppBarProps) {
             </ListItemButton>
           </ListItem>
           {id && (
-            <ListItem disablePadding>
-              <ListItemButton
-                onClick={save}
-                sx={{ display: "flex", justifyContent: "space-between" }}
-              >
-                <ListItemText primary="Lagre" />
+            <>
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={save}
+                  sx={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <ListItemText primary="Lagre" />
 
-                <Chip sx={{ color: "#d3d3d3" }} size="small" label="Ctrl + S" />
-              </ListItemButton>
-            </ListItem>
+                  <Chip
+                    sx={{ color: "#d3d3d3" }}
+                    size="small"
+                    label="Ctrl + S"
+                  />
+                </ListItemButton>
+              </ListItem>
+
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={saveAs}
+                  sx={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <ListItemText primary="Lagre som" />
+
+                  <Chip
+                    sx={{ color: "#d3d3d3" }}
+                    size="small"
+                    label="Ctrl + Shift +S"
+                  />
+                </ListItemButton>
+              </ListItem>
+            </>
           )}
         </List>
       </Drawer>

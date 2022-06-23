@@ -4,8 +4,10 @@ import "@tjernstad-utvikling/geo-image/dist/plugin";
 
 import { File } from "../contracts/file";
 import { Editor as TinyMceReactEditor } from "@tinymce/tinymce-react";
+import { db } from "../utils/db";
 import { useFile } from "../context/file";
 import { useHotkeys } from "react-hotkeys-hook";
+import { useLiveQuery } from "dexie-react-hooks";
 
 // import '../style/tinymce.css';
 
@@ -22,6 +24,20 @@ export default function Editor({
 }: EditorProps) {
   const { saveFile, editorRef, updateEditedStatus, saveFileAs } = useFile();
 
+  const fileContent = useLiveQuery(
+    async () => {
+      //
+      // Query Dexie's API
+      //
+      const data = await db.files.get({ id: file.id });
+
+      // Return result
+      return data;
+    },
+    // specify vars that affect query:
+    [file.id]
+  );
+
   // Save file
   useHotkeys("Control+s", (e) => {
     e.preventDefault();
@@ -37,6 +53,12 @@ export default function Editor({
     if (file.id) saveFileAs(file.id);
   });
 
+  function onContentUpdate(evt: any) {
+    if (file) db.files.update(file.id, { content: evt.lastLevel.content });
+  }
+
+  if (!fileContent) return <div />;
+
   return (
     <div style={{ maxWidth: "970px" }}>
       <TinyMceReactEditor
@@ -44,10 +66,13 @@ export default function Editor({
         onInit={(_, editor) => {
           editorRef.current = editor;
         }}
-        onChange={() => {
+        onChange={(evt) => {
+          onContentUpdate(evt);
+        }}
+        onDirty={() => {
           if (file) updateEditedStatus(file.id, true);
         }}
-        initialValue={file.content}
+        initialValue={fileContent?.content}
         init={{
           height: 500,
           menubar: false,

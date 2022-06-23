@@ -30,6 +30,8 @@ export function FileTabs({ files, isEdited }: FileTabsProps) {
   const routeMatch = useRouteMatch(files.map((f) => `/editor/${f.id}`));
   const currentTab = routeMatch?.pattern?.path;
 
+  if (!currentTab) return <div />;
+
   return (
     <Tabs value={currentTab} variant="scrollable" scrollButtons="auto">
       {files.map((f) => (

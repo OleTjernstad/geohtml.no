@@ -3,6 +3,7 @@ import { createContext, useContext, useRef, useState } from "react";
 import { ContextInterface } from "./contracts";
 import { File } from "../contracts/file";
 import { Editor as TinyMCEEditor } from "tinymce";
+import { db } from "../utils/db";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
@@ -12,7 +13,6 @@ const context = createContext<ContextInterface>({} as ContextInterface);
 export const useFile = () => {
   return useContext(context);
 };
-
 export const FileContextProvider = ({
   children,
 }: {
@@ -38,13 +38,15 @@ export const FileContextProvider = ({
     openFile();
   });
 
-  function newFile() {
+  async function newFile() {
     const id = uuidv4();
     setFiles((prev) => {
-      return [
-        ...prev,
-        { id, content: "", name: "Ny fil.html", fileHandle: undefined },
-      ];
+      return [...prev, { id, name: "Ny fil.html", fileHandle: undefined }];
+    });
+
+    await db.files.add({
+      id,
+      content: "",
     });
     navigate(`editor/${id}`);
     updateEditedStatus(id, true);
@@ -58,8 +60,14 @@ export const FileContextProvider = ({
 
     const id = uuidv4();
     setFiles((prev) => {
-      return [...prev, { id, content: contents, name: file.name, fileHandle }];
+      return [...prev, { id, name: file.name, fileHandle }];
     });
+
+    await db.files.add({
+      id,
+      content: contents,
+    });
+
     navigate(`editor/${id}`);
   }
 
@@ -116,12 +124,14 @@ export const FileContextProvider = ({
 
     const savedFile = await fileHandle.getFile();
 
+    if (!newContent) return;
+
     setFiles((fs) => {
       return fs.map((f) => {
         if (f.id === file.id) {
           return {
             ...f,
-            content: newContent ?? f.content,
+            content: newContent,
             name: savedFile.name,
             fileHandle,
           };
@@ -133,7 +143,7 @@ export const FileContextProvider = ({
     // Create a FileSystemWritableFileStream to write to.
     const writable = await fileHandle.createWritable();
     // Write the contents of the file to the stream.
-    await writable.write(newContent ?? file.content);
+    await writable.write(newContent);
     // Close the file and write the contents to disk.
     await writable.close();
   }

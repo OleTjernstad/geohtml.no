@@ -38,7 +38,7 @@ export default function EditorScreen() {
           }}
         >
           <Editor
-            key={file.id}
+            key={`${file.id}${file.fileHandle}`}
             file={file}
             openNewFile={createNewFile}
             openExistingFile={openExistingFile}

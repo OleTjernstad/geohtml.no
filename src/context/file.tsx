@@ -67,7 +67,7 @@ export const FileContextProvider = ({
     const file = files.find((f) => f.id === id);
 
     if (file) {
-      // Save file as
+      // Save file as first time
       if (!file.fileHandle) {
         const options = {
           suggestedName: "Beskrivelse.html",
@@ -84,8 +84,30 @@ export const FileContextProvider = ({
 
         _save(file, fileHandle);
       } else {
+        // save file
         _save(file, file.fileHandle);
       }
+    }
+  }
+  async function saveFileAs(id: string) {
+    const file = files.find((f) => f.id === id);
+
+    if (file) {
+      // Save file as
+      const options = {
+        suggestedName: file.name,
+        types: [
+          {
+            description: "Geocaching beskrivelse",
+            accept: {
+              "text/html": [".html"],
+            },
+          },
+        ],
+      };
+      const fileHandle = await window.showSaveFilePicker(options);
+
+      _save(file, fileHandle);
     }
   }
 
@@ -125,35 +147,6 @@ export const FileContextProvider = ({
     setRefreshIndex(Date.now());
   };
 
-  // useEffect(() => {
-  //   const removeListener = electron.ipcRenderer.on('new-file', (_file) => {
-  //     const id = uuidv4();
-  //     if (!isFile(_file)) return;
-  //     setFiles((prev) => {
-  //       return [...prev, { ..._file, id }];
-  //     });
-  //     setActiveId(id);
-  //   });
-  //   return () => {
-  //     if (removeListener) removeListener();
-  //   };
-  // }, []);
-
-  // useEffect(() => {
-  //   electron.ipcRenderer.once('save-file', (arg) => {
-  //     if (!isFile(arg)) return;
-
-  //     setFiles((fs) => {
-  //       return fs.map((f) => {
-  //         if (f.id === arg.id) {
-  //           return arg;
-  //         }
-  //         return f;
-  //       });
-  //     });
-  //   });
-  // }, []);
-
   return (
     <context.Provider
       value={{
@@ -166,6 +159,7 @@ export const FileContextProvider = ({
         createNewFile: newFile,
         openExistingFile: openFile,
         saveFile,
+        saveFileAs,
       }}
     >
       {children}

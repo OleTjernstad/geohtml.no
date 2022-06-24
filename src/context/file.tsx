@@ -5,6 +5,7 @@ import { File } from "../contracts/file";
 import { Editor as TinyMCEEditor } from "tinymce";
 import { db } from "../utils/db";
 import { useHotkeys } from "react-hotkeys-hook";
+import { useLiveQuery } from "dexie-react-hooks";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
@@ -25,6 +26,19 @@ export const FileContextProvider = ({
   const editorRef = useRef<TinyMCEEditor>();
 
   const navigate = useNavigate();
+
+  const lastFiles = useLiveQuery(() =>
+    db.files
+      .orderBy("lastEdited")
+      .reverse()
+      .filter(function (f) {
+        return f.fileHandle !== undefined;
+      })
+      .limit(5)
+      .toArray()
+  );
+
+  console.log(lastFiles);
 
   // New file
   useHotkeys("Control+m", (e) => {
@@ -181,6 +195,8 @@ export const FileContextProvider = ({
         openExistingFile: openFile,
         saveFile,
         saveFileAs,
+
+        lastFiles: lastFiles ?? [],
       }}
     >
       {children}

@@ -1,4 +1,5 @@
 import { File } from "../contracts/file";
+import { FileContent } from "../utils/db";
 import { Editor as TinyMCEEditor } from "tinymce";
 
 export interface ContextInterface {
@@ -13,4 +14,6 @@ export interface ContextInterface {
   openExistingFile: () => void;
   saveFile: (id: string) => void;
   saveFileAs: (id: string) => void;
+
+  lastFiles: FileContent[];
 }

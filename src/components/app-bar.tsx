@@ -1,6 +1,7 @@
 import AppBarMui from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
+import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import { FileTabs } from "./file-tabs";
 import IconButton from "@mui/material/IconButton";
@@ -8,11 +9,11 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
+import ListSubheader from "@mui/material/ListSubheader";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import { useFile } from "../context/file";
 import { useState } from "react";
-
 interface AppBarProps {
   id?: string;
 }
@@ -26,6 +27,7 @@ export default function AppBar({ id }: AppBarProps) {
     saveFileAs,
     files,
     isEdited,
+    lastFiles,
   } = useFile();
 
   function newFile() {
@@ -128,6 +130,40 @@ export default function AppBar({ id }: AppBarProps) {
               </ListItem>
             </>
           )}
+          <Box
+            sx={{
+              paddingTop: 8,
+            }}
+          >
+            {lastFiles && lastFiles.length > 0 && (
+              <>
+                <ListSubheader>Siste filer</ListSubheader>
+                {lastFiles.map((f) => {
+                  const edited = new Date(f.lastEdited);
+                  return (
+                    <>
+                      <ListItem key={f.id} disablePadding>
+                        <ListItemButton
+                          onClick={saveAs}
+                          sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <ListItemText primary={f.name} />
+
+                          <span style={{ fontSize: "0.62rem" }}>
+                            {edited.toLocaleString()}
+                          </span>
+                        </ListItemButton>
+                      </ListItem>
+                      <Divider />
+                    </>
+                  );
+                })}
+              </>
+            )}
+          </Box>
         </List>
       </Drawer>
     </Box>

@@ -4,7 +4,9 @@ import Dexie, { Table } from "dexie";
 
 export interface FileContent {
   id?: string;
+  name: string;
   content: string;
+  fileHandle: FileSystemFileHandle | undefined;
 }
 
 export class GeoHTMLDexie extends Dexie {
@@ -15,7 +17,7 @@ export class GeoHTMLDexie extends Dexie {
   constructor() {
     super("FileDB");
     this.version(1).stores({
-      files: "++id, content", // Primary key and indexed props
+      files: "++id, name, content, fileHandle", // Primary key and indexed props
     });
   }
 }

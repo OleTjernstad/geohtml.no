@@ -41,12 +41,14 @@ export const FileContextProvider = ({
   async function newFile() {
     const id = uuidv4();
     setFiles((prev) => {
-      return [...prev, { id, name: "Ny fil.html", fileHandle: undefined }];
+      return [...prev, { id, name: "Ny.html", fileHandle: undefined }];
     });
 
     await db.files.add({
       id,
+      name: "Ny.html",
       content: "",
+      fileHandle: undefined,
     });
     navigate(`editor/${id}`);
     updateEditedStatus(id, true);
@@ -65,7 +67,9 @@ export const FileContextProvider = ({
 
     await db.files.add({
       id,
+      name: file.name,
       content: contents,
+      fileHandle,
     });
 
     navigate(`editor/${id}`);
@@ -126,12 +130,16 @@ export const FileContextProvider = ({
 
     if (!newContent) return;
 
+    db.files.update(file.id, {
+      name: savedFile.name,
+      fileHandle,
+    });
+
     setFiles((fs) => {
       return fs.map((f) => {
         if (f.id === file.id) {
           return {
             ...f,
-            content: newContent,
             name: savedFile.name,
             fileHandle,
           };

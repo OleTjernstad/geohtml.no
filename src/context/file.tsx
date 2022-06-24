@@ -49,6 +49,7 @@ export const FileContextProvider = ({
       name: "Ny.html",
       content: "",
       fileHandle: undefined,
+      lastEdited: Date.now(),
     });
     navigate(`editor/${id}`);
     updateEditedStatus(id, true);
@@ -70,6 +71,7 @@ export const FileContextProvider = ({
       name: file.name,
       content: contents,
       fileHandle,
+      lastEdited: Date.now(),
     });
 
     navigate(`editor/${id}`);
@@ -133,6 +135,7 @@ export const FileContextProvider = ({
     db.files.update(file.id, {
       name: savedFile.name,
       fileHandle,
+      lastEdited: Date.now(),
     });
 
     setFiles((fs) => {

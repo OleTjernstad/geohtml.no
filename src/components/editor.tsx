@@ -56,7 +56,11 @@ export default function Editor({
   });
 
   function onContentUpdate(evt: any) {
-    if (file) db.files.update(file.id, { content: evt.lastLevel.content });
+    if (file)
+      db.files.update(file.id, {
+        content: evt.lastLevel.content,
+        lastEdited: Date.now(),
+      });
   }
 
   return (

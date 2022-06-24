@@ -15,5 +15,7 @@ export interface ContextInterface {
   saveFile: (id: string) => void;
   saveFileAs: (id: string) => void;
 
+  openFileFromMemory: (fileContent: FileContent) => Promise<void>;
+
   lastFiles: FileContent[];
 }

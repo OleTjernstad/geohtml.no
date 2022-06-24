@@ -1,9 +1,9 @@
+import { FileContent, db } from "../utils/db";
 import { createContext, useContext, useRef, useState } from "react";
 
 import { ContextInterface } from "./contracts";
 import { File } from "../contracts/file";
 import { Editor as TinyMCEEditor } from "tinymce";
-import { db } from "../utils/db";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useLiveQuery } from "dexie-react-hooks";
 import { useNavigate } from "react-router-dom";
@@ -89,6 +89,36 @@ export const FileContextProvider = ({
     });
 
     navigate(`editor/${id}`);
+  }
+
+  async function openFileFromMemory(fileContent: FileContent) {
+    // const file = await fileContent?.fileHandle?.getFile();
+    // if (!file) return;
+    // const contents = await file?.text();
+
+    // if (contents) {
+    //   setFiles((prev) => {
+    //     return [
+    //       ...prev,
+    //       {
+    //         id: fileContent.id ?? "",
+    //         name: file?.name ?? "Fil navn.html",
+    //         fileHandle: fileContent.fileHandle,
+    //       },
+    //     ];
+    //   });
+    // }
+    setFiles((prev) => {
+      return [
+        ...prev,
+        {
+          id: fileContent.id ?? "",
+          name: fileContent.name,
+          fileHandle: fileContent.fileHandle,
+        },
+      ];
+    });
+    navigate(`editor/${fileContent.id}`);
   }
 
   async function saveFile(id: string) {
@@ -195,6 +225,8 @@ export const FileContextProvider = ({
         openExistingFile: openFile,
         saveFile,
         saveFileAs,
+
+        openFileFromMemory,
 
         lastFiles: lastFiles ?? [],
       }}

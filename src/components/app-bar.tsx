@@ -25,6 +25,7 @@ export default function AppBar({ id }: AppBarProps) {
     openExistingFile,
     saveFile,
     saveFileAs,
+    openFileFromMemory,
     files,
     isEdited,
     lastFiles,
@@ -141,10 +142,10 @@ export default function AppBar({ id }: AppBarProps) {
                 {lastFiles.map((f) => {
                   const edited = new Date(f.lastEdited);
                   return (
-                    <>
-                      <ListItem key={f.id} disablePadding>
+                    <div key={f.id}>
+                      <ListItem disablePadding>
                         <ListItemButton
-                          onClick={saveAs}
+                          onClick={() => openFileFromMemory(f)}
                           sx={{
                             display: "flex",
                             justifyContent: "space-between",
@@ -158,7 +159,7 @@ export default function AppBar({ id }: AppBarProps) {
                         </ListItemButton>
                       </ListItem>
                       <Divider />
-                    </>
+                    </div>
                   );
                 })}
               </>

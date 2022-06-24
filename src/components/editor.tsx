@@ -68,8 +68,6 @@ export default function Editor({
         }}
         onChange={(evt) => {
           onContentUpdate(evt);
-        }}
-        onDirty={() => {
           if (file) updateEditedStatus(file.id, true);
         }}
         initialValue={fileContent}

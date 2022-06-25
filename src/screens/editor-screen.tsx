@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import AppBar from "../components/app-bar";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Editor from "../components/editor";
 import { useFile } from "../context/file";
 
@@ -31,6 +32,16 @@ export default function EditorScreen() {
     <>
       <AppBar id={id} />
       <Box sx={{ paddingTop: "70px" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <Button sx={{ marginBottom: "10px" }} variant="contained">
+            Kopier HTML
+          </Button>
+        </div>
         <div
           style={{
             display: "flex",

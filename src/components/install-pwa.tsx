@@ -13,18 +13,18 @@ export const InstallPwa = () => {
   };
 
   const renderInstallButton = () => {
-    if (isInstallPromptSupported && isStandalone)
-      return (
-        <Button
-          sx={{ marginBottom: "10px", width: "500px" }}
-          onClick={onClickInstall}
-          startIcon={<InstallDesktopIcon />}
-          variant="contained"
-        >
-          Start installasjon
-        </Button>
-      );
-    return null;
+    // if (isInstallPromptSupported && isStandalone)
+    return (
+      <Button
+        sx={{ marginBottom: "10px", width: "500px" }}
+        onClick={onClickInstall}
+        startIcon={<InstallDesktopIcon />}
+        variant="contained"
+      >
+        Start installasjon
+      </Button>
+    );
+    // return null;
   };
 
   //   if (!isInstallPromptSupported && isStandalone) return <></>;

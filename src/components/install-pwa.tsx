@@ -1,75 +1,75 @@
-// import Button from "@mui/material/Button";
-// import InstallDesktopIcon from "@mui/icons-material/InstallDesktop";
-
-import { useEffect } from "react";
-
-// import usePWA from "react-pwa-install-prompt";
+import Button from "@mui/material/Button";
+import InstallDesktopIcon from "@mui/icons-material/InstallDesktop";
+import usePWA from "react-pwa-install-prompt";
 
 export const InstallPwa = () => {
-  // const { isInstallPromptSupported, isStandalone, promptInstall } = usePWA();
+  const { isInstallPromptSupported, isStandalone, promptInstall } = usePWA();
 
-  useEffect(() => {
-    const beforeinstallpromptHandler = (e: Event) => {
-      // Prevent install prompt from showing so we can prompt it later
-      e.preventDefault();
+  // const promptHandler = useRef();
 
-      const promptInstall = async () => {
-        // @ts-ignore
-        console.log(console.log(e.platforms));
-        // @ts-ignore
-        const promptRes = await e.prompt();
-        console.log(promptRes);
-        if (promptRes.outcome === "accepted") {
-          // setPwaInfos({
-          //   ...pwaInfos,
-          //   isStandalone: checkStandalone(),
-          // });
-          return true;
-        }
-        return false;
-      };
+  // useEffect(() => {
+  //   const beforeinstallpromptHandler = (e: Event) => {
+  //     // Prevent install prompt from showing so we can prompt it later
+  //     e.preventDefault();
 
-      promptInstall();
+  //     const promptInstall = async () => {
+  //       // @ts-ignore
+  //       console.log(console.log(e.platforms));
+  //       // @ts-ignore
+  //       const promptRes = await e.prompt();
+  //       console.log(promptRes);
+  //       if (promptRes.outcome === "accepted") {
+  //         // setPwaInfos({
+  //         //   ...pwaInfos,
+  //         //   isStandalone: checkStandalone(),
+  //         // });
+  //         return true;
+  //       }
+  //       return false;
+  //     };
 
-      // setPwaInfos({
-      //   isInstallPromptSupported: true,
-      //   promptInstall,
-      //   isStandalone: checkStandalone(),
-      // });
-    };
-    window.addEventListener("beforeinstallprompt", beforeinstallpromptHandler);
-    // 👇️ remove the event listener when component unmounts
-    return () => {
-      window.removeEventListener(
-        "beforeinstallprompt",
-        beforeinstallpromptHandler
-      );
-    };
-  });
+  //     promptInstall();
 
-  // const onClickInstall = async () => {
-  //   const didInstall = await promptInstall();
-  //   if (didInstall) {
-  //     // User accepted PWA install
-  //   }
-  // };
+  //     // setPwaInfos({
+  //     //   isInstallPromptSupported: true,
+  //     //   promptInstall,
+  //     //   isStandalone: checkStandalone(),
+  //     // });
+  //   };
+  //   window.addEventListener("beforeinstallprompt", beforeinstallpromptHandler);
+  //   // 👇️ remove the event listener when component unmounts
+  //   return () => {
+  //     window.removeEventListener(
+  //       "beforeinstallprompt",
+  //       beforeinstallpromptHandler
+  //     );
+  //   };
+  // });
 
-  // const renderInstallButton = () => {
-  //   // if (isInstallPromptSupported && isStandalone)
+  const onClickInstall = async () => {
+    const didInstall = await promptInstall();
+    console.log({ didInstall });
+    if (didInstall) {
+      // User accepted PWA install
+    }
+  };
 
-  //   console.log({ isInstallPromptSupported, isStandalone });
-  //   return (
-  //     <Button
-  //       sx={{ marginBottom: "10px" }}
-  //       onClick={onClickInstall}
-  //       startIcon={<InstallDesktopIcon />}
-  //       variant="contained"
-  //     >
-  //       Start installasjon
-  //     </Button>
-  //   );
-  //   // return null;
-  // };
+  const renderInstallButton = () => {
+    // if (isInstallPromptSupported && isStandalone)
+
+    console.log({ isInstallPromptSupported, isStandalone });
+    return (
+      <Button
+        sx={{ marginBottom: "10px" }}
+        onClick={onClickInstall}
+        startIcon={<InstallDesktopIcon />}
+        variant="contained"
+      >
+        Start installasjon
+      </Button>
+    );
+    // return null;
+  };
 
   //   if (!isInstallPromptSupported && isStandalone) return <></>;
 
@@ -95,7 +95,7 @@ export const InstallPwa = () => {
 
         <p>GeoHtml kan også brukes uten å installeres</p>
 
-        {/* {renderInstallButton()} */}
+        {renderInstallButton()}
       </div>
     </div>
   );

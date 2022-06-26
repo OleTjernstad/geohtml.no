@@ -1,56 +1,15 @@
 import Button from "@mui/material/Button";
 import InstallDesktopIcon from "@mui/icons-material/InstallDesktop";
+import toast from "react-hot-toast";
 import usePWA from "react-pwa-install-prompt";
 
 export const InstallPwa = () => {
   const { isInstallPromptSupported, isStandalone, promptInstall } = usePWA();
 
-  // const promptHandler = useRef();
-
-  // useEffect(() => {
-  //   const beforeinstallpromptHandler = (e: Event) => {
-  //     // Prevent install prompt from showing so we can prompt it later
-  //     e.preventDefault();
-
-  //     const promptInstall = async () => {
-  //       // @ts-ignore
-  //       console.log(console.log(e.platforms));
-  //       // @ts-ignore
-  //       const promptRes = await e.prompt();
-  //       console.log(promptRes);
-  //       if (promptRes.outcome === "accepted") {
-  //         // setPwaInfos({
-  //         //   ...pwaInfos,
-  //         //   isStandalone: checkStandalone(),
-  //         // });
-  //         return true;
-  //       }
-  //       return false;
-  //     };
-
-  //     promptInstall();
-
-  //     // setPwaInfos({
-  //     //   isInstallPromptSupported: true,
-  //     //   promptInstall,
-  //     //   isStandalone: checkStandalone(),
-  //     // });
-  //   };
-  //   window.addEventListener("beforeinstallprompt", beforeinstallpromptHandler);
-  //   // 👇️ remove the event listener when component unmounts
-  //   return () => {
-  //     window.removeEventListener(
-  //       "beforeinstallprompt",
-  //       beforeinstallpromptHandler
-  //     );
-  //   };
-  // });
-
   const onClickInstall = async () => {
     const didInstall = await promptInstall();
-    console.log({ didInstall });
     if (didInstall) {
-      // User accepted PWA install
+      toast.success("Takk for at du valgte å installere GeoHtml");
     }
   };
 

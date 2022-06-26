@@ -1,6 +1,8 @@
 {
   "name": "GeoHtml",
   "short_name": "GeoHtml",
+  "description": "Editor for rike cachebeskrivelser, installer for enkel offline tilgang",
+  "id": "no.geohtml.app",
   "icons": [
     {
       "src": "favicon.ico",

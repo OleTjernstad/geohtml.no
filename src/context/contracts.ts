@@ -17,5 +17,7 @@ export interface ContextInterface {
 
   openFileFromMemory: (fileContent: FileContent) => Promise<void>;
 
+  copyHtmlFromEditor: () => Promise<void>;
+
   lastFiles: FileContent[];
 }

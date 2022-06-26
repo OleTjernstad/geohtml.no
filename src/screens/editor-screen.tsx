@@ -4,11 +4,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import AppBar from "../components/app-bar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import Editor from "../components/editor";
 import { useFile } from "../context/file";
 
 export default function EditorScreen() {
-  const { createNewFile, openExistingFile, files } = useFile();
+  const { createNewFile, openExistingFile, files, copyHtmlFromEditor } =
+    useFile();
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -38,7 +40,12 @@ export default function EditorScreen() {
             justifyContent: "center",
           }}
         >
-          <Button sx={{ marginBottom: "10px" }} variant="contained">
+          <Button
+            sx={{ marginBottom: "10px", width: "500px" }}
+            onClick={copyHtmlFromEditor}
+            startIcon={<ContentCopyIcon />}
+            variant="contained"
+          >
             Kopier HTML
           </Button>
         </div>

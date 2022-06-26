@@ -4,6 +4,7 @@ import { createContext, useContext, useRef, useState } from "react";
 import { ContextInterface } from "./contracts";
 import { File } from "../contracts/file";
 import { Editor as TinyMCEEditor } from "tinymce";
+import toast from "react-hot-toast";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useLiveQuery } from "dexie-react-hooks";
 import { useNavigate } from "react-router-dom";
@@ -38,8 +39,6 @@ export const FileContextProvider = ({
       .toArray()
   );
 
-  console.log(lastFiles);
-
   // New file
   useHotkeys("Control+m", (e) => {
     e.preventDefault();
@@ -71,7 +70,7 @@ export const FileContextProvider = ({
 
   async function openFile() {
     const [fileHandle] = await window.showOpenFilePicker();
-    console.log(fileHandle);
+
     const file = await fileHandle.getFile();
     const contents = await file.text();
 
@@ -91,33 +90,48 @@ export const FileContextProvider = ({
     navigate(`editor/${id}`);
   }
 
-  async function openFileFromMemory(fileContent: FileContent) {
-    // const file = await fileContent?.fileHandle?.getFile();
-    // if (!file) return;
-    // const contents = await file?.text();
-
-    // if (contents) {
-    //   setFiles((prev) => {
-    //     return [
-    //       ...prev,
-    //       {
-    //         id: fileContent.id ?? "",
-    //         name: file?.name ?? "Fil navn.html",
-    //         fileHandle: fileContent.fileHandle,
-    //       },
-    //     ];
-    //   });
-    // }
-    setFiles((prev) => {
-      return [
-        ...prev,
-        {
-          id: fileContent.id ?? "",
-          name: fileContent.name,
-          fileHandle: fileContent.fileHandle,
+  async function copyHtmlFromEditor() {
+    try {
+      navigator.clipboard.writeText(editorRef.current?.getContent() ?? "").then(
+        function () {
+          toast.success("html kopiert til utklippstavle");
         },
-      ];
-    });
+        function () {
+          toast.error("Kunne ikke kopiere HTML");
+        }
+      );
+    } catch (error) {
+      toast.error("Denne funksjonen er ikke tilgjengelig");
+    }
+  }
+
+  async function openFileFromMemory(fileContent: FileContent) {
+    const file = await fileContent?.fileHandle?.getFile();
+    if (!file) return;
+    const contents = await file?.text();
+
+    if (contents) {
+      setFiles((prev) => {
+        return [
+          ...prev,
+          {
+            id: fileContent.id ?? "",
+            name: file?.name ?? "Fil navn.html",
+            fileHandle: fileContent.fileHandle,
+          },
+        ];
+      });
+    }
+    // setFiles((prev) => {
+    //   return [
+    //     ...prev,
+    //     {
+    //       id: fileContent.id ?? "",
+    //       name: fileContent.name,
+    //       fileHandle: fileContent.fileHandle,
+    //     },
+    //   ];
+    // });
     navigate(`editor/${fileContent.id}`);
   }
 
@@ -225,6 +239,8 @@ export const FileContextProvider = ({
         openExistingFile: openFile,
         saveFile,
         saveFileAs,
+
+        copyHtmlFromEditor,
 
         openFileFromMemory,
 

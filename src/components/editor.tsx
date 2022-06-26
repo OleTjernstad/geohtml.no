@@ -43,7 +43,6 @@ export default function Editor({
   // Save file
   useHotkeys("Control+s", (e) => {
     e.preventDefault();
-    console.log("editor", file);
 
     if (file.id) saveFile(file.id);
   });

@@ -5,6 +5,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import EditorScreen from "./screens/editor-screen";
 import { FileContextProvider } from "./context/file";
 import StartScreen from "./screens/start-screen";
+import { Toaster } from "react-hot-toast";
 
 const theme = createTheme({
   palette: {
@@ -33,6 +34,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <FileContextProvider>
         <CssBaseline />
+        <Toaster />
         <Routes>
           <Route path="/" element={<StartScreen />} />
           <Route path="editor/:id" element={<EditorScreen />} />

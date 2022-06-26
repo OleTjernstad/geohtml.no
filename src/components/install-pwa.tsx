@@ -9,19 +9,41 @@ export const InstallPwa = () => {
   // const { isInstallPromptSupported, isStandalone, promptInstall } = usePWA();
 
   useEffect(() => {
-    window.addEventListener("beforeinstallprompt", function (e: any) {
-      // log the platforms provided as options in an install prompt
-      console.log(e.platforms); // e.g., ["web", "android", "windows"]
-      e.userChoice.then(
-        function (choiceResult: any) {
-          console.log(choiceResult.outcome); // either "accepted" or "dismissed"
-        },
-        (e: any) => console.log("error", e)
-      );
-    });
+    const beforeinstallpromptHandler = (e: Event) => {
+      // Prevent install prompt from showing so we can prompt it later
+      e.preventDefault();
+
+      const promptInstall = async () => {
+        // @ts-ignore
+        console.log(console.log(e.platforms));
+        // @ts-ignore
+        const promptRes = await e.prompt();
+        console.log(promptRes);
+        if (promptRes.outcome === "accepted") {
+          // setPwaInfos({
+          //   ...pwaInfos,
+          //   isStandalone: checkStandalone(),
+          // });
+          return true;
+        }
+        return false;
+      };
+
+      promptInstall();
+
+      // setPwaInfos({
+      //   isInstallPromptSupported: true,
+      //   promptInstall,
+      //   isStandalone: checkStandalone(),
+      // });
+    };
+    window.addEventListener("beforeinstallprompt", beforeinstallpromptHandler);
     // 👇️ remove the event listener when component unmounts
     return () => {
-      window.removeEventListener("beforeinstallprompt", (e) => console.log(e));
+      window.removeEventListener(
+        "beforeinstallprompt",
+        beforeinstallpromptHandler
+      );
     };
   });
 

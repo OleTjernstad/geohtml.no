@@ -1,6 +1,7 @@
 import AppBar from "../components/app-bar";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
+import { InstallPwa } from "../components/install-pwa";
 import logo from "../assets/logo.png";
 
 export default function StartScreen() {
@@ -16,6 +17,8 @@ export default function StartScreen() {
               alt="logo"
             />
           </div>
+
+          <InstallPwa />
           <div
             style={{
               display: "flex",

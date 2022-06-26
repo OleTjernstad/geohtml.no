@@ -3,7 +3,7 @@ import InstallDesktopIcon from "@mui/icons-material/InstallDesktop";
 import usePWA from "react-pwa-install-prompt";
 
 export const InstallPwa = () => {
-  const { isStandalone, isInstallPromptSupported, promptInstall } = usePWA();
+  const { promptInstall } = usePWA();
 
   const onClickInstall = async () => {
     const didInstall = await promptInstall();

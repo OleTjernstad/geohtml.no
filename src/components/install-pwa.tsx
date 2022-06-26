@@ -71,7 +71,7 @@ export const InstallPwa = () => {
     // return null;
   };
 
-  //   if (!isInstallPromptSupported && isStandalone) return <></>;
+  if (!isInstallPromptSupported || isStandalone) return <></>;
 
   return (
     <div

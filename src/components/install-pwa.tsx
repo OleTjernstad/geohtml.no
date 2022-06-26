@@ -3,7 +3,7 @@ import InstallDesktopIcon from "@mui/icons-material/InstallDesktop";
 import usePWA from "react-pwa-install-prompt";
 
 export const InstallPwa = () => {
-  const { promptInstall } = usePWA();
+  const { isInstallPromptSupported, isStandalone, promptInstall } = usePWA();
 
   const onClickInstall = async () => {
     const didInstall = await promptInstall();
@@ -14,9 +14,11 @@ export const InstallPwa = () => {
 
   const renderInstallButton = () => {
     // if (isInstallPromptSupported && isStandalone)
+
+    console.log({ isInstallPromptSupported, isStandalone });
     return (
       <Button
-        sx={{ marginBottom: "10px", width: "500px" }}
+        sx={{ marginBottom: "10px" }}
         onClick={onClickInstall}
         startIcon={<InstallDesktopIcon />}
         variant="contained"
